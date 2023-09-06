@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>ClosureCodingAssignment</title>
+</head>
+<body>
+    <h3><pre>Q1:- function counter(){
+        var counter = 0;
+    
+        function IncreaseCounter() {
+            return counter += 1;
+        };
+    
+        return IncreaseCounter;
+    }
+    
+    var counter = counter();
+    alert(counter());
+    alert(counter());
+    alert(counter());
+    alert(counter());
+    </pre></h3>
+    <h4>1.var counter = counter();: This line of code calls the outer counter  function and assigns its return value to the variable counter. The outer counter function initializes a local variable counter to 0 and returns the inner IncreaseCounter function. So, after this line, counter is a reference to the IncreaseCounter function. <br><br> 
+
+    2.alert(counter());: This line calls the IncreaseCounter function through the counter variable. When this function is called, it increments the counter variable by 1 and returns the updated value. The initial value of counter is 0, so after this line, it becomes 1. The alert displays 1.
+    <br><br>        
+    3.alert(counter());: Again, this line calls the IncreaseCounter function, which increments the counter variable from 1 to 2 and returns 2. The alert displays 2.
+    <br><br>
+    4.alert(counter());: This line increments the counter variable from 2 to 3 and displays 3.
+    <br><br>
+    5.alert(counter());: Finally, this line increments the counter variable from 3 to 4 and displays 4. <br><br>
+    </h4>
+    <hr>
+    <h3><pre>Q2:- let count = 0;
+        (function () {
+          if (count === 0) {
+            let count = 1;
+            console.log(count); // What is logged?
+          }
+          console.log(count); // What is logged?
+        })();</pre></h3>
+    <h4>Here's the output and the reason behind it:
+
+       1. Inside the IIFE, there's an if statement that checks if the global variable count is equal to 0. Since it is (global count is 0), it enters the if block. <br><br>
+        
+       2. Inside the if block, a new variable count is declared using the let keyword. This declaration creates a new local variable with the same name as the global one, but it shadows (hides) the global variable within the scope of the if block. <br><br>
+        
+      3. Inside the if block, console.log(count); is called, which logs the local variable count, which is 1. This is because the local variable within the if block takes precedence over the global variable within that block's scope. <br><br>
+        
+      4.After the if block, there's another console.log(count); statement. This logs the global variable count, which is still 0, because the local variable declared inside the if block only exists within that block's scope and does not affect the global variable.</h4> <br><br>
+      <hr>
+      <h3><pre>Q3:- for (var i = 0; i < 3; i++) {
+        setTimeout(function log() {
+          console.log(i); // What is logged?
+        }, 1000);
+      }</pre></h3>
+      <h4>1.Initialization:
+
+        The for loop initializes i to 0.
+        The loop condition is i < 3, which is true, so the loop executes.
+        Inside the loop, a setTimeout function is called three times with a delay of 1000 milliseconds (1 second) for each iteration. <br><br>
+        2.Execution:
+        
+        The loop iterates three times, incrementing i from 0 to 1 and then to 2.
+        Each time the setTimeout function is called, it schedules the log function to execute after a 1-second delay. However, it does not immediately execute the log function. <br><br>
+        3.Delayed Execution:
+        
+        After the for loop completes its execution, the value of i is 3 because the loop condition i < 3 becomes false when i reaches 3.
+        Now, all three setTimeout functions have been scheduled to run, but they all reference the same variable i.
+        Logging: <br><br>
+        
+        After 1 second, all three log functions execute, and they all attempt to log the value of i. <br><br>
+        At this point, the value of i is 3 because it was the final value when the loop completed. <br><br>
+        Therefore, all three console.log(i) statements will print 3 to the console.<br><br>
+        Output:- 3 <br>
+                 3 <br>
+                 3 </h4> <br><br>
+        <hr>
+        <h3>Q4:- Write a code to calculate area of a rectangle using inner function. In this case outer function should accept parameter length and inner function should accept parameter breadth</h3>
+
+        <h4><pre>function calculateRectangleArea(length) {
+        
+            function innerFunction(breadth) {
+              return length * breadth;
+            }
+          
+            return innerFunction;
+          }
+          
+         
+          const calculateArea = calculateRectangleArea(10); // Pass the length
+          const area = calculateArea(5); // Pass the breadth
+          console.log("Area of the rectangle:", area);
+          </pre></h4>
+          <hr>
+          <h3>Q5: Take a variable in outer function and create an inner function to increase the counter every time it is called</h3>
+          <h4><pre>function createCounter() {
+            let counter = 0; 
+          
+        
+            function incrementCounter() {
+              counter++;
+              console.log(`Counter is now ${counter}`);
+            }
+          
+            return incrementCounter;
+          }
+          
+          const myCounter = createCounter();
+          
+          myCounter(); // Output: Counter is now 1
+          myCounter(); // Output: Counter is now 2
+          myCounter(); // Output: Counter is now 3
+          </pre></h4>
+          <hr>
+          <h3><pre>Q6:- Print Output
+
+            var a = 12;
+            (function () {
+              alert(a);
+            })();</pre></h3>
+        <h4>Output:-12</h4>
+        <hr>
+        <h3><pre>Q7:- var a = 10;
+            var x = (function () {
+              var a = 12;
+              return function () {
+                alert(a);
+              };
+            })();
+            x();</pre></h3>
+        <h4>
+            
+           1. var a = 10;: This declares a global variable a with a value of 10.
+            <br><br>
+           2. var x = (function () { ... })();: This defines an immediately invoked function expression (IIFE). Inside this IIFE, there is another variable a declared with a value of 12. Then, it returns a function. <br><br>
+            
+           3. x();: This calls the function returned by the IIFE.
+            <br><br>
+            Now, let's see what happens when you call x():
+            <br><br>
+            Inside the returned function, alert(a); is executed. JavaScript looks for the value of a in the local scope first. If it doesn't find it, it looks in the parent scope. In this case, the local variable a with a value of 12 is in the same scope as the alert(a); statement, so the output of alert(a); will be 12.
+            <br><br>
+            So, when you call x();, it will display an alert with the value 12. <br><br></h4>
+            <hr>
+            <h3><pre>Q8:- var globalVar = "xyz";
+
+                (function outerFunc(outerArg) {
+                    var outerVar = 'a';
+                    
+                    (function innerFunc(innerArg) {
+                    var innerVar = 'b';
+                    
+                    console.log(
+                        "outerArg = " + outerArg + "\n" +
+                        "innerArg = " + innerArg + "\n" +
+                        "outerVar = " + outerVar + "\n" +
+                        "innerVar = " + innerVar + "\n" +
+                        "globalVar = " + globalVar);
+                    
+                    })(456);
+                })(123)</pre></h3>
+            <h4>
+                Now, let's execute the code step by step:
+                <br><br>
+               1. The outermost IIFE is immediately invoked with the argument 123. <br><br>
+                
+                outerArg inside outerFunc is set to 123.
+                outerVar inside outerFunc is set to 'a'. <br><br>
+            2.Inside the outermost IIFE, another IIFE (innerFunc) is immediately invoked with the argument 456.
+                
+                innerArg inside innerFunc is set to 456.
+                innerVar inside innerFunc is set to 'b'. <br><br>
+            3.The console.log statement inside innerFunc prints the following values:
+                
+                "outerArg = 123"
+                "innerArg = 456"
+                "outerVar = a"
+                "innerVar = b"
+                "globalVar = xyz"</h4> <br><br>
+        <hr>
+    <script src="./script.js"></script>
+</body>
+</html>
